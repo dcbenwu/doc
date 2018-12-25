@@ -10,7 +10,8 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
 
 ```markdown
 Syntax highlighted code block
-
+# oom killer理解和日志分析:知识储备
+Link[Link](https://www.jianshu.com/p/ba1cdf92a602) 
 # Linux 下进程消失的原因分析
 ## 命令参考
 dmesg | egrep -i -B100 'killed process'
@@ -22,6 +23,15 @@ egrep -i -r 'killed process' /var/log
 ## 或:
 journalctl -xb | egrep -i 'killed process'
 --------------------- 
+# 一个查询决策的方法
+[root@cnsh2ucats978 cats]# cat oomscore.sh
+#!/bin/bash
+for proc in $(find /proc -maxdepth 1 -regex '/proc/[0-9]+'); do
+    printf "%2d %5d %s\n" \
+        "$(cat $proc/oom_score)" \
+        "$(basename $proc)" \
+        "$(cat $proc/cmdline | tr '\0' ' ' | head -c 50)"
+done 2>/dev/null | sort -nr | head -n 10
 
 ### Header 3
 
