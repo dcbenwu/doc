@@ -11,8 +11,18 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
 ```markdown
 Syntax highlighted code block
 
-# Header 1
-## Header 2
+# Linux 下进程消失的原因分析
+## 命令参考
+dmesg | egrep -i -B100 'killed process'
+
+## 或:
+egrep -i 'killed process' /var/log/messages
+egrep -i -r 'killed process' /var/log
+
+## 或:
+journalctl -xb | egrep -i 'killed process'
+--------------------- 
+
 ### Header 3
 
 - Bulleted
